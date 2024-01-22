@@ -1,0 +1,6 @@
+module views
+
+BasicView 1.0 BasicView.qml
+EndView 1.0 EndView.qml
+GameView 1.0 GameView.qml
+StartView 1.0 StartView.qml

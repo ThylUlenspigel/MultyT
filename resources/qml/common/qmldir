@@ -1,3 +1,4 @@
 singleton Common 1.0 Common.qml
 singleton Theme 1.0 Theme.qml
 singleton Global 1.0 Global.qml
+singleton Utilities 1.0 Utilities.qml

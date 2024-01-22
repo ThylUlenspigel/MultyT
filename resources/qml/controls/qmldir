@@ -1,2 +1,7 @@
 module controls
 
+BodyText 1.0 BodyText.qml
+IconButton 1.0 IconButton.qml
+OverlayedImage 1.0 OverlayedImage.qml
+TextFieldControl 1.0 TextFieldControl.qml
+TextButton 1.0 TextButton.qml
