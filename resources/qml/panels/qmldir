@@ -1,2 +1,8 @@
 module panels
 
+GameEndPanel 1.0 GameEndPanel.qml
+GameStartPanel 1.0 GameStartPanel.qml
+GameStatPanel 1.0 GameStatPanel.qml
+InputPanel 1.0 InputPanel.qml
+KeyPadPanel 1.0 KeyPadPanel.qml
+MenuPanel 1.0  MenuPanel.qml

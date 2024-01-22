@@ -3,13 +3,44 @@
         <file>qml/main.qml</file>
         <file>qml/common/Common.qml</file>
         <file>qml/common/Global.qml</file>
-        <file>qml/common/PlaceHolder.txt</file>
         <file>qml/common/qmldir</file>
         <file>qml/common/Theme.qml</file>
-        <file>qml/controls/PlaceHolder.txt</file>
         <file>qml/controls/qmldir</file>
-        <file>qml/panels/PlaceHolder.txt</file>
         <file>qml/panels/qmldir</file>
-        <file>assets/PlaceHolder.txt</file>
+        <file>assets/backspace.svg</file>
+        <file>assets/confirm.svg</file>
+        <file>assets/cross.svg</file>
+        <file>assets/digit-0.svg</file>
+        <file>assets/digit-1.svg</file>
+        <file>assets/digit-2.svg</file>
+        <file>assets/digit-3.svg</file>
+        <file>assets/digit-4.svg</file>
+        <file>assets/digit-5.svg</file>
+        <file>assets/digit-6.svg</file>
+        <file>assets/digit-7.svg</file>
+        <file>assets/digit-8.svg</file>
+        <file>assets/digit-9.svg</file>
+        <file>assets/enter.svg</file>
+        <file>assets/heart.svg</file>
+        <file>assets/menu.svg</file>
+        <file>assets/refresh.svg</file>
+        <file>assets/star.svg</file>
+        <file>qml/controls/BodyText.qml</file>
+        <file>qml/controls/IconButton.qml</file>
+        <file>qml/controls/OverlayedImage.qml</file>
+        <file>qml/controls/TextFieldControl.qml</file>
+        <file>qml/common/Utilities.qml</file>
+        <file>qml/controls/TextButton.qml</file>
+        <file>qml/panels/GameStatPanel.qml</file>
+        <file>qml/panels/KeyPadPanel.qml</file>
+        <file>qml/panels/InputPanel.qml</file>
+        <file>qml/panels/GameStartPanel.qml</file>
+        <file>qml/panels/MenuPanel.qml</file>
+        <file>qml/panels/GameEndPanel.qml</file>
+        <file>qml/views/BasicView.qml</file>
+        <file>qml/views/StartView.qml</file>
+        <file>qml/views/GameView.qml</file>
+        <file>qml/views/EndView.qml</file>
+        <file>qml/views/qmldir</file>
     </qresource>
 </RCC>
