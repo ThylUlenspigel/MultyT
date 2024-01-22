@@ -1,0 +1,69 @@
+include: ".gitlab-ci-runners-templates.yml"
+
+stages:
+  # - Build
+  # - Tests
+  # - Deploy
+
+variables:
+  GIT_SUBMODULE_STRATEGY: normal
+
+.desktopJobTemplate: &desktopJobTriggeringChanges
+  changes:
+    - .gitlab-ci.yml
+
+.windowsJobTemplate: &winJob
+  tags:
+    - windows
+    - qt
+
+#"Windows, Build - Qt 6":
+#  <<: *winJob
+#  stage: Build
+#  script:
+#    - echo "Build configurations will be added after configuring VTK library in CI machine"
+#    - cmake --preset vtk-windows
+#    - cmake --build --preset vtk-windows --config Release --parallel 2>&1
+#    - mkdir artifacts
+#    - cp .\build\Release\MultyT.exe artifacts\   
+
+#  artifacts:
+#    paths:
+#      - artifacts
+#    expire_in: 2 h
+
+#"Windows, Deploy - Qt 6":
+#  <<: *winJob
+#  stage: Deploy
+#  dependencies: ["Windows, Build - Qt 6"]
+#  script:
+#    - Xcopy C:\Users\ /E /H /C /I
+#    - Xcopy C:\Users\ /E /H /C /I
+#    - cd artifacts
+#    - C:\Qt\6.5.1\msvc2019_64\bin\windeployqt.exe MultyT.exe --qmldir ..\resources\qml\ --compiler-runtime --release
+
+#  artifacts:
+#    paths:
+#      - artifacts
+#    expire_in: 2 h
+
+# "Android, Build":
+#   extends: .androidJobTemplate
+#   stage: Build
+#   variables:
+#     SHOULD_BUILD: "true"
+#   script:
+#     - ruby targets/android/runPipeline.rb
+#   artifacts:
+#     paths:
+#       - build/android/android-build/MultyT.apk
+#     expire_in: 1 week
+
+# "Windows, QML analysis":
+#   <<: *winJob
+#   stage: Tests
+#   except:
+#     - main
+#   script:
+#     - .\plainQmlLint.ps1
+

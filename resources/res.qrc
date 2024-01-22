@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/common/Common.qml</file>
+        <file>qml/common/Global.qml</file>
+        <file>qml/common/PlaceHolder.txt</file>
+        <file>qml/common/qmldir</file>
+        <file>qml/common/Theme.qml</file>
+        <file>qml/controls/PlaceHolder.txt</file>
+        <file>qml/controls/qmldir</file>
+        <file>qml/panels/PlaceHolder.txt</file>
+        <file>qml/panels/qmldir</file>
+        <file>assets/PlaceHolder.txt</file>
+    </qresource>
+</RCC>
