@@ -6,3 +6,4 @@ GameStatPanel 1.0 GameStatPanel.qml
 InputPanel 1.0 InputPanel.qml
 KeyPadPanel 1.0 KeyPadPanel.qml
 MenuPanel 1.0  MenuPanel.qml
+ImagesPanel 1.0 ImagesPanel.qml

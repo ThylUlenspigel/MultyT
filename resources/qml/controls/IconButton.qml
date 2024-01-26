@@ -21,8 +21,8 @@ AbstractButton {
   property color borderReleasedColor: Theme.borderReleasedColor
   property color layerEffectColor: Theme.borderReleasedColor
 
-  implicitWidth: 30
-  implicitHeight: 30
+  implicitWidth: Common.digitButtonWidth
+  implicitHeight: Common.digitButtonHeight
 
   opacity: enabled? Theme.enabledOpacity : Theme.disabledOpacity
 

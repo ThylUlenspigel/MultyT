@@ -42,5 +42,11 @@
         <file>qml/views/GameView.qml</file>
         <file>qml/views/EndView.qml</file>
         <file>qml/views/qmldir</file>
+        <file>qml/panels/ImagesPanel.qml</file>
+        <file>assets/next.svg</file>
+        <file>assets/star-empty.svg</file>
+        <file>qml/controls/TimeIndicator.qml</file>
+        <file>qml/controls/StatIndicator.qml</file>
+        <file>assets/heart-empty.svg</file>
     </qresource>
 </RCC>
