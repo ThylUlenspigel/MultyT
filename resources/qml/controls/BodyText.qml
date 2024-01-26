@@ -1,4 +1,5 @@
 import QtQuick
+
 import com.tu.theme 1.0
 
 Text {

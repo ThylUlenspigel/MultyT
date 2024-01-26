@@ -11,6 +11,8 @@ Item {
   property alias title: fieldTitle.text
   property alias fieldText: textField.text
   property alias enabled: textField.enabled
+  property alias textFieldBackgroundColor: background.color
+  property alias input: textField
 
   Column {
     id: fieldColumn
@@ -28,6 +30,7 @@ Item {
       font.pixelSize: Theme.smallFontSize
       wrapMode: Text.WordWrap
       verticalAlignment: Text.AlignVCenter
+      horizontalAlignment: Text.AlignHCenter
     }
 
     TextField {
@@ -39,10 +42,12 @@ Item {
       leftPadding: Common.textFieldPadding
       rightPadding: Common.textFieldPadding
       verticalAlignment: Text.AlignVCenter
+      horizontalAlignment: Text.AlignHCenter
       color: Theme.mainFontColor
       font.pixelSize: Theme.mainFontSize
 
       background: Rectangle {
+        id: background
         anchors.fill: parent
         radius: 10
         color: textField.enabled? Theme.textFieldBackgroundColor
