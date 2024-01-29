@@ -12,7 +12,7 @@ RowLayout {
   id: root
 
   property int imageAmount: 10
-  property int globalParameter: Global.passedTaskCount
+  property int globalParameter: 0
   property color enabledColor: Theme.starOverlayColor
   property color disabledColor: Theme.starDisabledOverlayColor
   property url enabledImageSource: "qrc:/assets/star.svg"

@@ -10,19 +10,23 @@
 #include <QUrl>
 #include <QSharedPointer>
 
+#include "data/Logic.h"
+#include "controllers/GameController.h"
+
 int main(int argc, char *argv[])
 {   
     QGuiApplication app(argc, argv);
     QQuickStyle::setStyle("Basic");
+
+    //Game interface
+    std::shared_ptr<Logic> logic = std::make_shared<Logic>();
+    auto gameController = QSharedPointer<GameController>(new GameController(logic, &app));
 
     // Register custom types
     qmlRegisterSingletonType(QUrl{QStringLiteral("qrc:/qml/common/Common.qml")}   , "com.tu.common"   , 1, 0, "Common");
     qmlRegisterSingletonType(QUrl{QStringLiteral("qrc:/qml/common/Theme.qml")}    , "com.tu.theme"    , 1, 0, "Theme" );
     qmlRegisterSingletonType(QUrl{QStringLiteral("qrc:/qml/common/Global.qml")}   , "com.tu.global"   , 1, 0, "Global");
     qmlRegisterSingletonType(QUrl{QStringLiteral("qrc:/qml/common/Utilities.qml")}, "com.tu.utilities", 1, 0, "Utilities");
-
-    QQmlApplicationEngine engine;
-    engine.addImportPath(":/qml");
 
     // Translator
     QTranslator translator;
@@ -35,12 +39,12 @@ int main(int argc, char *argv[])
         }
     }
 
-    //Game interface
-
-    //TODO: Add game interface
+    QQmlApplicationEngine engine;
+    engine.addImportPath(":/qml");
 
     // View
-//    QQmlContext* rootContext = engine.rootContext();
+    engine.rootContext()->setContextProperty("gameController", gameController.get());
+
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
 
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

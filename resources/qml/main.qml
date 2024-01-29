@@ -1,15 +1,11 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Layouts
 
-import controls 1.0
-import panels 1.0
 import views 1.0
-import com.tu.theme 1.0
-import com.tu.global 1.0
 import com.tu.utilities 1.0
 
 Window {
+  id: root
   width: Utilities.dp(1050)
   height: Utilities.dp(1680)
   visible: true
@@ -19,14 +15,18 @@ Window {
       id: stackView
       anchors.fill: parent
       Component.onCompleted: function() {
-          stackView.push(componentGameView)
+          stackView.push(componentStartView)
       }
   }
 
   Component {
-    id: componentSartView
+    id: componentStartView
     StartView {
       id: startView
+      onNewGameStarted: function () {
+        stackView.push(componentGameView)
+        gameController.startNewGame(true)
+      }
     }
   }
 
@@ -41,7 +41,27 @@ Window {
     id: componentEndView
     EndView {
       id: endView
+      onNewGameRequested: function () {
+        stackView.push(componentStartView)
+        gameController.startNewGame(true);
+      }
+
+      onContinueGameRequested: function () {
+        gameController.startNewGame(false);
+        stackView.push(componentGameView)
+      }
+
+      onExitApplicationRequested: function () {
+        root.close()
+      }
     }
   }
 
+  Connections {
+    target: gameController
+
+    function onGameEnded () {
+      stackView.push(componentEndView)
+    }
+  }
 }

@@ -43,8 +43,7 @@ QtObject {
     Key9,
     KeyAccept,
     KeyRemove,
-    KeyRefresh,
-    KeyNext
+    KeyRefresh
   }
 
   readonly property ListModel digitPanelModel: ListModel {
@@ -147,18 +146,10 @@ QtObject {
     ListElement {
       path: "qrc:/assets/refresh.svg"
       key: Common.KeyId.KeyRefresh
-      columnSpan: 2
+      columnSpan: 4
       rowSpan: 1
       row: 4
       column: 0
-    }
-    ListElement {
-      path: "qrc:/assets/next.svg"
-      key: Common.KeyId.KeyNext
-      columnSpan: 2
-      rowSpan: 1
-      row: 4
-      column: 2
     }
   }
 
