@@ -29,7 +29,7 @@ ColumnLayout {
     Layout.alignment: Qt.AlignHCenter
 
     imageAmount: 4
-    globalParameter: root.lifeCount//Global.lifesCount
+    globalParameter: root.lifeCount
     enabledColor: Theme.heartOverlayColor
     disabledColor: Theme.heartDisabledOverlayColor
     enabledImageSource: "qrc:/assets/heart.svg"

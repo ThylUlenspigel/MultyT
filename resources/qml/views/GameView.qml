@@ -29,6 +29,8 @@ BasicView {
       IconButton {
         id: menuButton
 
+        property bool isPaused: false
+
         Layout.fillHeight: true
         Layout.minimumWidth: Common.menuButtonWidth
         Layout.minimumHeight: Common.menuButtonHeihgt
@@ -36,6 +38,12 @@ BasicView {
         iconSource: "qrc:/assets/menu.svg"
         backgroundRadius: 0
         useOverlayLayer: true
+
+        onPressed: function() {
+          menuButton.isPaused = !menuButton.isPaused
+          gameController.setOnPause(menuButton.isPaused)
+          contentWrapper.enabled =! menuButton.isPaused
+        }
       }
 
       BodyText {
@@ -44,7 +52,7 @@ BasicView {
         Layout.fillHeight: true
         Layout.fillWidth: true
 
-        text: qsTr("Kiril")
+        text: gameController.playerName
         horizontalAlignment: Text.AlignLeft
         font.pixelSize: Theme.largeFontSize
       }
@@ -71,15 +79,30 @@ BasicView {
 
         Layout.preferredHeight: Utilities.dp(150)
         Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
+
+        lifeAmount: gameController.maxLifes
+        lifeCount: gameController.lifeCount
+        curentLevel: gameController.level
+        curentScore: gameController.score
+        gameDuration: gameController.gameDuration
+        answerDuration: gameController.answerDuration
       }
 
       InputPanel {
         id: inputPanel
+
         Layout.fillWidth: true
         Layout.fillHeight: true
         Layout.preferredHeight: Utilities.dp(250)
         Layout.maximumHeight: Utilities.dp(250)
         Layout.alignment: Qt.AlignHCenter
+
+        valueMultiplier: gameController.multiplier
+        valueMultiplicand: gameController.multiplicand
+        resultField.text: keypadPanel.typedValue
+
+        state: internal.answerStatus(gameController.status)  //can be done via "switch-case"
+
       }
 
       ImagesPanel {
@@ -87,6 +110,8 @@ BasicView {
 
         Layout.fillWidth: true
         Layout.fillHeight: true
+        imageAmount: gameController.maxTasks
+        globalParameter: gameController.taskCount
       }
 
       KeyPadPanel {
@@ -95,7 +120,50 @@ BasicView {
         Layout.fillWidth: true
         Layout.maximumHeight: Utilities.dp(600)
         Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
+
+        onKeyButtonPressed: function(key) {
+          switch(key) {
+          case Common.KeyId.KeyAccept:
+            inputPanel.resultField.accepted()
+            gameController.checkResult(parseInt(keypadPanel.typedValue))
+            keypadPanel.buttonDisabled = Common.KeyId.KeyAccept
+            break
+          case Common.KeyId.KeyRemove:
+            internal.clearResultField()
+            break
+          case Common.KeyId.KeyRefresh:
+            internal.clearResultField()
+            gameController.nextTask()
+            keypadPanel.buttonDisabled = Common.KeyId.KeyRefresh
+            break
+          default:
+            break
+          }
+        }
       }
+    }
+  }
+
+  Connections {
+    target: gameController
+    function onLevelChanged(level) {
+      internal.clearResultField()
+      keypadPanel.buttonDisabled = Common.KeyId.KeyRefresh
+    }
+  }
+
+  QtObject {
+    id: internal
+
+    function answerStatus( status) {
+      if (status === Common.Result.Wrong) return "wrong"
+      if (status === Common.Result.Right) return "right"
+      return "undefined"
+    }
+
+    function clearResultField() {
+      keypadPanel.typedValue = ""
+      inputPanel.resultField.clear()
     }
   }
 }

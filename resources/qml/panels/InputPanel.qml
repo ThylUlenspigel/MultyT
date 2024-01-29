@@ -10,9 +10,9 @@ import com.tu.common 1.0
 ColumnLayout {
   id: root
 
-  property int valueMultiplier: 5
-  property int valueMultiplicand: 5
-  property int valueResult: 25
+  property int valueMultiplier: 0
+  property int valueMultiplicand: 0
+  property alias resultField: fieldResult.input
 
   state: "wrong"
 
@@ -73,7 +73,9 @@ ColumnLayout {
 
     title: qsTr("Result")
     enabled: true
-    fieldText: root.valueResult.toString()
+
+    input.maximumLength: 3
+
     input.validator:IntValidator {
       bottom: 0
       top: 999
