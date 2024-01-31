@@ -41,8 +41,8 @@ set(PROJECT_SOURCES
     src/data/Logic.cpp
     src/data/Record.h
     src/data/Record.cpp
-    src/data/Records.h
-    src/data/Records.cpp
+    src/data/RecordModel.h
+    src/data/RecordModel.cpp
     resources/res.qrc
     ${TS_FILES}
 )
@@ -60,7 +60,6 @@ target_include_directories(MultyT PRIVATE
 target_link_libraries(MultyT PRIVATE
     Qt6::Core
     Qt6::Gui
-    Qt6::Widgets
     Qt6::Quick
     Qt6::QuickControls2
 )
