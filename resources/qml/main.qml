@@ -1,10 +1,11 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Window
 
 import views 1.0
 import com.tu.utilities 1.0
 
-Window {
+ApplicationWindow {
   id: root
   width: Utilities.dp(1050)
   height: Utilities.dp(1680)
@@ -14,17 +15,36 @@ Window {
   StackView {
       id: stackView
       anchors.fill: parent
-      Component.onCompleted: function() {
-          stackView.push(componentStartView)
+
+      initialItem: componentStartView
+
+      replaceEnter: Transition {
+        PropertyAnimation {
+          property: "opacity"
+          from: 0
+          to: 1
+          duration: 500
+          easing.type: Easing.InOutCirc
+        }
+      }
+      replaceExit: Transition {
+        PropertyAnimation {
+          property: "opacity"
+          from: 1
+          to: 0
+          duration: 200
+          easing.type: Easing.OutInQuad
+        }
       }
   }
 
   Component {
     id: componentStartView
+
     StartView {
       id: startView
       onNewGameStarted: function () {
-        stackView.push(componentGameView)
+        stackView.replace(componentGameView)
         gameController.startNewGame(true)
       }
     }
@@ -32,6 +52,7 @@ Window {
 
   Component {
     id: componentGameView
+
     GameView {
       id:gameView
     }
@@ -39,16 +60,17 @@ Window {
 
   Component {
     id: componentEndView
+
     EndView {
       id: endView
       onNewGameRequested: function () {
-        stackView.push(componentStartView)
+        stackView.replace(componentStartView)
         gameController.startNewGame(true);
       }
 
       onContinueGameRequested: function () {
         gameController.startNewGame(false);
-        stackView.push(componentGameView)
+        stackView.replace(componentGameView)
       }
 
       onExitApplicationRequested: function () {
@@ -61,7 +83,7 @@ Window {
     target: gameController
 
     function onGameEnded () {
-      stackView.push(componentEndView)
+      stackView.replace(componentEndView)
     }
   }
 }

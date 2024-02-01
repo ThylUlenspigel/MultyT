@@ -24,6 +24,7 @@ namespace {
 
     QScopedPointer<QTimer> m_gameTimer  (new QTimer());
     QScopedPointer<QTimer> m_answerTimer(new QTimer());
+    QSharedPointer<RecordModel> m_recordModel{new RecordModel()};
 
     quint32 m_multiplier{1};
     quint32 m_multiplicand{1};
@@ -216,6 +217,24 @@ void GameController::setPlayerName(const QString& name) {
         m_playerName = name;
         emit playerNameChanged(m_playerName);
     }
+}
+
+void GameController::loadRecords() {
+    if (!m_recordModel.get()->loadFromFile()) {
+        return;
+    }
+}
+
+void GameController::addRecord() {
+    m_recordModel.get()->addRecord(m_playerName, m_logic.get()->score(), m_gameDuration/1000); // duration transferred from msec to sec
+}
+
+void GameController::saveRecords() {
+    m_recordModel.get()->saveToFile();
+}
+
+RecordModel *GameController::recordModel() {
+    return m_recordModel.get();
 }
 
 void GameController::startLevel(Levels level) {

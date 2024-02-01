@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "../data/logic.h"
+#include "../data/RecordModel.h"
 
 /*!
      * \class GameController
@@ -193,6 +194,31 @@ public:
      * \param name (QString&)
     */
     Q_INVOKABLE void setPlayerName(const QString& name);
+
+    /*!
+     * \brief Using in QML. Function initializes records model
+     * from "records.dat" file.
+    */
+    Q_INVOKABLE void loadRecords();
+
+    /*!
+     * \brief Using in QML. Function adds record to records model based.
+     * Records are based on values of controller's properties "name",
+     * "score" and "duration"
+    */
+    Q_INVOKABLE void addRecord();
+
+    /*!
+     * \brief Using in QML. Function saves records model to
+     * "records.dat" file.
+    */
+    Q_INVOKABLE void saveRecords();
+
+    /*!
+     * \brief Getter for recordModel store.
+     * \return pointer to record model object
+    */
+    RecordModel *recordModel();
 
 signals:
     void multiplierChanged(quint32 value);

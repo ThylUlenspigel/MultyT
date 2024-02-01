@@ -48,5 +48,6 @@
         <file>qml/controls/TimeIndicator.qml</file>
         <file>qml/controls/StatIndicator.qml</file>
         <file>assets/heart-empty.svg</file>
+        <file>assets/records.dat</file>
     </qresource>
 </RCC>
