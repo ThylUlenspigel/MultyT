@@ -26,6 +26,7 @@ class GameController : public QObject
     Q_PROPERTY(quint32 answerDuration READ answerDuration NOTIFY answerDurationChanged)
     Q_PROPERTY(quint32 gameDuration   READ gameDuration   NOTIFY gameDurationChanged)
     Q_PROPERTY(quint32 status         READ status         NOTIFY statusChanged)
+    Q_PROPERTY(QString about          READ about          NOTIFY aboutChanged)
 
     Q_PROPERTY(QString playerName READ playerName WRITE setPlayerName NOTIFY playerNameChanged)
     Q_PROPERTY(bool    onPause    READ onPause    WRITE setOnPause    NOTIFY onPauseChanged)
@@ -124,6 +125,12 @@ public:
     quint32 status() const;
 
     /*!
+     * \brief Getter for about property.
+     * \return QString.
+    */
+    QString about() const;
+
+    /*!
      * \brief Getter for max task property.
      * \return quint32.
     */
@@ -202,19 +209,6 @@ public:
     Q_INVOKABLE void loadRecords();
 
     /*!
-     * \brief Using in QML. Function adds record to records model based.
-     * Records are based on values of controller's properties "name",
-     * "score" and "duration"
-    */
-    Q_INVOKABLE void addRecord();
-
-    /*!
-     * \brief Using in QML. Function saves records model to
-     * "records.dat" file.
-    */
-    Q_INVOKABLE void saveRecords();
-
-    /*!
      * \brief Getter for recordModel store.
      * \return pointer to record model object
     */
@@ -231,7 +225,9 @@ signals:
     void gameDurationChanged(quint32 value);
     void playerNameChanged(QString& name);
     void statusChanged(quint32 status);
+    void aboutChanged();
     void onPauseChanged();
+    void answerTimeout();
 
     void gameStarted();
     void gameEnded();

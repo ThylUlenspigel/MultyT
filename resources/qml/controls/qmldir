@@ -7,3 +7,4 @@ TextFieldControl 1.0 TextFieldControl.qml
 TextButton 1.0 TextButton.qml
 TimeIndicator 1.0 TimeIndicator.qml
 StatIndicator 1.0 StatIndicator.qml
+RecordDelegate 1.0 RecordDelegate.qml

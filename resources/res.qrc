@@ -34,9 +34,7 @@
         <file>qml/panels/GameStatPanel.qml</file>
         <file>qml/panels/KeyPadPanel.qml</file>
         <file>qml/panels/InputPanel.qml</file>
-        <file>qml/panels/GameStartPanel.qml</file>
         <file>qml/panels/MenuPanel.qml</file>
-        <file>qml/panels/GameEndPanel.qml</file>
         <file>qml/views/BasicView.qml</file>
         <file>qml/views/StartView.qml</file>
         <file>qml/views/GameView.qml</file>
@@ -48,6 +46,10 @@
         <file>qml/controls/TimeIndicator.qml</file>
         <file>qml/controls/StatIndicator.qml</file>
         <file>assets/heart-empty.svg</file>
-        <file>assets/records.dat</file>
+        <file>qml/panels/RecordsPanel.qml</file>
+        <file>qml/controls/RecordDelegate.qml</file>
+        <file>qml/panels/HeaderPanel.qml</file>
+        <file>qml/panels/InfoPopup.qml</file>
+        <file>assets/about.txt</file>
     </qresource>
 </RCC>

@@ -9,6 +9,7 @@ AbstractButton {
 
   property alias contentText: contentTextID.text
   property alias backgroundRadius: iconButtonBackgroundID.radius
+  property alias textHorizontalAlignment: contentTextID.horizontalAlignment
 
   property bool useBorder: true
 

@@ -1,6 +1,7 @@
 #include "GameController.h"
 #include <QDebug>
 #include <QTimer>
+#include "../helpers/Util.h"
 
 namespace {
     constexpr quint32 m_maxTasks{10};
@@ -25,6 +26,7 @@ namespace {
     QScopedPointer<QTimer> m_gameTimer  (new QTimer());
     QScopedPointer<QTimer> m_answerTimer(new QTimer());
     QSharedPointer<RecordModel> m_recordModel{new RecordModel()};
+    QScopedPointer<Util> m_util(new Util());
 
     quint32 m_multiplier{1};
     quint32 m_multiplicand{1};
@@ -123,6 +125,10 @@ quint32 GameController::status() const {
     return static_cast<quint32>(m_status);
 }
 
+QString GameController::about() const {
+    return m_util->readTextFromFile(":/assets/about.txt");
+}
+
 quint32 GameController::maxTasks() const {
     return m_maxTasks;
 }
@@ -155,8 +161,11 @@ void GameController::startNewGame(const bool isNewGame) {
 void GameController::endGame() {
     m_gameTimer.get()->stop();
     m_answerTimer.get()->stop();
+
+    m_recordModel.get()->readModelFromFile();
+    m_recordModel.get()->addRecord(m_playerName, m_logic.get()->score(), m_gameDuration);
+    m_recordModel.get()->writeModelToFile();
     emit gameEnded();
-    //TODO add game duration, score  and player name to game records
 }
 
 void GameController::setOnPause(const bool isOnPause) {
@@ -220,17 +229,9 @@ void GameController::setPlayerName(const QString& name) {
 }
 
 void GameController::loadRecords() {
-    if (!m_recordModel.get()->loadFromFile()) {
+    if (!m_recordModel.get()->readModelFromFile()) {
         return;
     }
-}
-
-void GameController::addRecord() {
-    m_recordModel.get()->addRecord(m_playerName, m_logic.get()->score(), m_gameDuration/1000); // duration transferred from msec to sec
-}
-
-void GameController::saveRecords() {
-    m_recordModel.get()->saveToFile();
 }
 
 RecordModel *GameController::recordModel() {
@@ -257,6 +258,7 @@ void GameController::updateAnswerDuration() {
         m_answerTimer.get()->stop();
         m_gameTimer.get()->stop();
         decreaseLife();
+        emit answerTimeout();
     }
 }
 
@@ -277,3 +279,5 @@ void GameController::decreaseLife() {
         endGame();
     }
 }
+
+
