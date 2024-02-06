@@ -29,6 +29,9 @@ QtObject {
 
   readonly property int starImageHeight: Utilities.dp(30)
   readonly property int starImageWidth: Utilities.dp(30)
+  readonly property int menuWidth: Utilities.dp(200)
+
+ readonly property int infoPopupMargin: Utilities.dp(60)
 
   enum KeyId {
     Key0 = 0,
@@ -157,5 +160,32 @@ QtObject {
     Undefinied = -1,
     Wrong,
     Right
+  }
+
+  enum MenuId {
+    Undefined = -1,
+    NewGame = 0,
+    Records,
+    About,
+    Exit
+  }
+
+  readonly property ListModel menuModel: ListModel {
+    ListElement {
+      menuId: Common.MenuId.NewGame
+      menuName: qsTr("New Game")
+    }
+    ListElement {
+      menuId: Common.MenuId.Records
+      menuName: qsTr("Records")
+    }
+    ListElement {
+      menuId: Common.MenuId.About
+      menuName: qsTr("About...")
+    }
+    ListElement {
+      menuId: Common.MenuId.Exit
+      menuName: qsTr("Exit")
+    }
   }
 }

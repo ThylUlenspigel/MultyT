@@ -1,9 +1,10 @@
 module panels
 
-GameEndPanel 1.0 GameEndPanel.qml
-GameStartPanel 1.0 GameStartPanel.qml
 GameStatPanel 1.0 GameStatPanel.qml
 InputPanel 1.0 InputPanel.qml
 KeyPadPanel 1.0 KeyPadPanel.qml
 MenuPanel 1.0  MenuPanel.qml
 ImagesPanel 1.0 ImagesPanel.qml
+RecordsPanel 1.0 RecordsPanel.qml
+HeaderPanel 1.0 HeaderPanel.qml
+InfoPopup 1.0 InfoPopup.qml

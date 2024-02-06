@@ -11,53 +11,7 @@ import com.tu.utilities 1.0
 BasicView {
   id: root
 
-  header: Rectangle {
-    id: header
-
-    height: Common.headerHeight
-    color: Theme.headerBackgroundColor
-
-    RowLayout {
-      id: headerRow
-
-      anchors {
-        fill: parent
-        margins: Common.sideMargin
-      }
-      spacing: 10
-
-      IconButton {
-        id: menuButton
-
-        property bool isPaused: false
-
-        Layout.fillHeight: true
-        Layout.minimumWidth: Common.menuButtonWidth
-        Layout.minimumHeight: Common.menuButtonHeihgt
-
-        iconSource: "qrc:/assets/menu.svg"
-        backgroundRadius: 0
-        useOverlayLayer: true
-
-        onPressed: function() {
-          menuButton.isPaused = !menuButton.isPaused
-          gameController.setOnPause(menuButton.isPaused)
-          contentWrapper.enabled =! menuButton.isPaused
-        }
-      }
-
-      BodyText {
-        id: playerName
-
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-
-        text: gameController.playerName
-        horizontalAlignment: Text.AlignLeft
-        font.pixelSize: Theme.largeFontSize
-      }
-    }
-  }
+  objectName: "GameScreen"
 
   Item {
     id: contentWrapper
@@ -66,6 +20,8 @@ BasicView {
       fill: parent
       margins: Common.sideMargin
     }
+
+    enabled: !gameController.onPause
 
     ColumnLayout {
       id: panelsColumn
@@ -102,7 +58,6 @@ BasicView {
         resultField.text: keypadPanel.typedValue
 
         state: internal.answerStatus(gameController.status)  //can be done via "switch-case"
-
       }
 
       ImagesPanel {
@@ -146,9 +101,14 @@ BasicView {
 
   Connections {
     target: gameController
+
     function onLevelChanged(level) {
       internal.clearResultField()
       keypadPanel.buttonDisabled = Common.KeyId.KeyRefresh
+    }
+
+    function onAnswerTimeout() {
+      keypadPanel.buttonDisabled = Common.KeyId.KeyAccept
     }
   }
 

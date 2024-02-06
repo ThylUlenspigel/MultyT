@@ -1,31 +1,35 @@
 #include <QDebug>
 #include <QFile>
-#include <QDataStream>
+#include <QtConcurrent>
+#include <QFuture>
 
 #include <algorithm>
 #include "RecordModel.h"
 
 namespace{
     constexpr int m_maxRecordsAmount = 10;
-//    QFile m_fileRecords("qrc:/assets/records.dat");
 }
 
 QDataStream& operator<<(QDataStream &out, const std::vector<std::shared_ptr<Record>> &vec) {
+    out.setVersion(QDataStream::Qt_6_5);
     quint32 numData = vec.size();
     out << numData;
     for (int i(0); i<numData; ++i) {
-        out<<vec[i].get();
+        out<<vec[i].get()->name()<<vec[i].get()->score()<<vec[i].get()->duration();
     }
     return out;
 }
 
-QDataStream& operator>>(QDataStream &in , std::vector<std::shared_ptr<Record>> &vec ) {
+QDataStream& operator>>(QDataStream &in, std::vector<std::shared_ptr<Record>> &vec ) {
+    in.setVersion(QDataStream::Qt_6_5);
     quint32 numData;
     in>>numData;
     for (int i{0}; i<numData; ++i) {
-        Record rec;
-        in>>rec;
-        auto record = std::make_shared<Record>(rec); //Looks not good!!!
+        QString name;
+        in>>name;
+        quint32 score, duration;
+        in>>score>>duration;
+        auto record = std::make_shared<Record>(name, score, duration);
         vec.push_back(std::move(record));
     }
     return in;
@@ -80,12 +84,12 @@ void RecordModel::addRecord(const QString& name, const quint32 score, const quin
     } else if (m_records.size() < m_maxRecordsAmount
              ||(m_records.size() == m_maxRecordsAmount
                 && m_records.back().get()->score()<score) ) {
+        beginResetModel();
         auto record = std::make_shared<Record>(name, score, duration);
         m_records.push_back(std::move(record));
 
-        beginResetModel();
         std::sort(m_records.begin(), m_records.end(),[](const std::shared_ptr<Record> r1, const std::shared_ptr<Record> r2) {
-            return r1.get()>r2.get();
+                return r1.get()->score() > r2.get()->score();
             });
         if (m_records.size() > m_maxRecordsAmount) {
             m_records.pop_back();
@@ -94,33 +98,52 @@ void RecordModel::addRecord(const QString& name, const quint32 score, const quin
     }
 }
 
-bool RecordModel::loadFromFile() {
+void RecordModel::swapContent(std::vector<std::shared_ptr<Record>> &vec) {
+    m_records.swap(vec);
+}
+
+std::shared_ptr<Record> RecordModel::recordByIndex(const int recordIndex) const {
+    try {
+        return m_records.at(recordIndex);
+    } catch (const std::exception& ex) {
+        qWarning() << "RecordsModel::recordByIndex: record index error" << ex.what();
+    }
+    return nullptr;
+}
+
+bool RecordModel::readModelFromFile() {
     bool result = true;
-    QFile file("qrc:/assets/records.dat");
+    QFile file("records.dat");
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning("RecordModel::loadFromFile(): could not open assets/records.dat file");
+        qWarning("RecordModel::loadFromFile(): could not open records.dat file");
         result = false;
-    } else if (isSaveFileEmpty()) {
-        qWarning("RecordModel::loadFromFile(): could not load data from assets/records.dat, file is empty");
+    } else if (isModelFileEmpty()) {
+        qWarning("RecordModel::loadFromFile(): could not load data from records.dat, file is empty");
         result = false;
     } else {
        QDataStream in(&file);
        std::vector<std::shared_ptr<Record>> records;
        in>> records;
+       beginResetModel();
        m_records.swap(records);
+       endResetModel();
        file.close();
     }
     return result;
 }
 
-bool RecordModel::saveToFile() {
+void RecordModel::asyncReadModelFromFile() {
+    QFuture<bool> future = QtConcurrent::run(&RecordModel::readModelFromFile, this);
+    qInfo() << "Result:" << future.result();
+}
+
+bool RecordModel::writeModelToFile() {
     bool result = true;
-    QFile file("qrc:/assets/records.dat");
+    QFile file("records.dat");
     if (!file.open(QIODevice::WriteOnly)) {
-        qWarning("RecordModel::writeToFile(): could not open assets/records.dat file");
+        qWarning("RecordModel::saveToFile(): could not open records.dat file");
         result = false;
     } else {
-        file.resize(0);
         QDataStream out(&file);
         out<<m_records;
         file.close();
@@ -128,11 +151,16 @@ bool RecordModel::saveToFile() {
     return result;
 }
 
+void RecordModel::asyncWriteModelToFile() {
+    QFuture<bool> future = QtConcurrent::run(&RecordModel::writeModelToFile, this);
+    qInfo() << "Result:" << future.result();
+}
+
 bool RecordModel::isEmpty() const {
     return m_records.empty();
 }
 
-bool RecordModel::isSaveFileEmpty() const {
-    QFile file("qrc:/assets/records.dat");
+bool RecordModel::isModelFileEmpty() const {
+    QFile file("records.dat");
     return (file.size() == 0);
 }

@@ -13,10 +13,6 @@ class Record
 public:
     explicit Record(const QString& name, const quint32 score, const quint32 duration);
 
-    explicit Record();
-
-    Record(const Record &copy);
-
     ~Record();
     /*!
      * \brief Getter for player's name.
@@ -53,57 +49,6 @@ public:
       * \param duartion (quint32).
      */
     void setDuration(const quint32 duration);
-
-    /*!
-     * \brief friend QDataStream operator << .
-     * \param out (QDataStream &),
-     * \param rec (const Record &).
-     * \return QDataStream& .
-    */
-    friend QDataStream& operator<<(QDataStream &out, const Record &rec );
-
-    /*!
-     * \brief friend QDataStream operator >> .
-     * \param in (QDataStream &),
-     * \param rec (Record &).
-     * \return QDataStream& .
-    */
-    friend QDataStream& operator>>(QDataStream &in, Record &rec );
-
-    /*!
-     * \brief Operator == .
-     * \param rec (const Record &).
-     * \return bool, true if equal, false otherwise.
-    */
-    bool operator == ( const Record &rec );
-
-    /*!
-     * \brief Operator != .
-     * \param rec (const Record &).
-     * \return bool, true if not equal, false otherwise.
-    */
-    bool operator != ( const Record &rec );
-
-    /*!
-     * \brief Operator > .
-     * \param rec (const Record &).
-     * \return bool, true if more, false otherwise.
-    */
-    bool operator >  ( const Record &rec );
-
-    /*!
-     * \brief Operator < .
-     * \param rec (const Record &).
-     * \return bool, true if less, false otherwise.
-    */
-    bool operator < ( const Record &rec );
-
-    /*!
-     * \brief Operator = .
-     * \param rhs (const Record &).
-     * \return Record&.
-    */
-    Record& operator =( const Record &rhs);
 
 private:
     quint32 m_score{};

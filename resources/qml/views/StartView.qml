@@ -11,12 +11,16 @@ import com.tu.utilities 1.0
 BasicView {
   id: root
 
+  objectName: "StartGameScreen"
+
   signal newGameStarted
 
   RowLayout {
     id: row
 
     anchors.centerIn: parent
+
+    enabled: !gameController.onPause
     spacing: Utilities.dp(15)
 
     TextFieldControl {

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import controls 1.0
+import panels 1.0
 import com.tu.utilities 1.0
 import com.tu.theme 1.0
 
@@ -12,11 +13,16 @@ BasicView {
   signal continueGameRequested
   signal exitApplicationRequested
 
+  objectName: "EndGameScreen"
+
   ColumnLayout {
     id: column
 
     anchors.centerIn: parent
 
+    enabled: !gameController.onPause
+
+    width: Utilities.dp(600)
     spacing: Utilities.dp(10)
 
     BodyText {
@@ -29,9 +35,13 @@ BasicView {
       font.pixelSize: Theme.largeFontSize
     }
 
-    //TODO Add result table with TOP-10 results
-    Item {
-      id: resultTable
+    RecordsPanel {
+      id: recordPanel
+
+      Layout.fillHeight: true
+      Layout.fillWidth: true
+      Layout.preferredHeight: Utilities.dp(800)
+      model: recordsModel
     }
 
     TextButton {
@@ -39,7 +49,6 @@ BasicView {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
-      Layout.preferredWidth: Utilities.dp(200)
       Layout.preferredHeight: Utilities.dp(60)
 
       contentText: qsTr("Start new game")
@@ -54,7 +63,6 @@ BasicView {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
-      Layout.preferredWidth: Utilities.dp(200)
       Layout.preferredHeight: Utilities.dp(60)
 
       contentText: qsTr("Continue...")
@@ -69,7 +77,6 @@ BasicView {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
-      Layout.preferredWidth: Utilities.dp(200)
       Layout.preferredHeight: Utilities.dp(60)
 
       contentText: qsTr("Exit game")

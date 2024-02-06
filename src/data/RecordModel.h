@@ -34,7 +34,6 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QHash<int, QByteArray> roleNames() const;
 
-
     /*!
      * \brief Function adds new record entity to the model
      * \param name, QString&
@@ -44,14 +43,37 @@ public:
     void addRecord(const QString& name, const quint32 score, const quint32 duration);
 
     /*!
-     * \brief Function loads the records model from the file-storage
+     * \brief Function swaps existing model to other
+     * \param vec, std::vector<std::shared_ptr<Record>>&
      */
-    bool loadFromFile();
+    void swapContent(std::vector<std::shared_ptr<Record>>& vec);
 
     /*!
-     * \brief Function saves the records model to the file-storage
+     * \brief Finds the record with index.
+     * \param recordIndex (row index)
+     * \return Record.
      */
-    bool saveToFile();
+    std::shared_ptr<Record> recordByIndex(int recordIndex) const;
+
+    /*!
+     * \brief Function reads the records model data from the file-storage
+     */
+    bool readModelFromFile();
+
+    /*!
+     * \brief Function asyncronicly reads the records model data from the file-storage
+     */
+    void asyncReadModelFromFile();
+
+    /*!
+     * \brief Function writes the records model data to the file-storage
+     */
+    bool writeModelToFile();
+
+    /*!
+     * \brief Function asyncronicly writes the records model data to the file-storage
+     */
+    void asyncWriteModelToFile();
 
     /*!
      * \brief Function checks if records model is empty or not
@@ -63,7 +85,7 @@ public:
      * \brief Function checks if file-storage is empty or not
      * \return true, if file is empty, false otherwise
      */
-    bool isSaveFileEmpty() const;
+    bool isModelFileEmpty() const;
 
     /*!
      * \brief friend QDataStream operator << .

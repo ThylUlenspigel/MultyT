@@ -23,7 +23,7 @@ if (CMAKE_SYSTEM_NAME MATCHES "Windows")
     SET(CMAKE_NINJA_FORCE_RESPONSE_FILE 1 CACHE INTERNAL "")
 endif()
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Quick QuickControls2 LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Quick QuickControls2 LinguistTools Concurrent)
 
 # Custom qml components
 list(APPEND QML_DIRS "${CMAKE_SOURCE_DIR}/resources/qml")
@@ -43,14 +43,17 @@ set(PROJECT_SOURCES
     src/data/Record.cpp
     src/data/RecordModel.h
     src/data/RecordModel.cpp
+    src/helpers/Util.h
+    src/helpers/Util.cpp
     resources/res.qrc
     ${TS_FILES}
 )
 
 qt_add_executable(MultyT
     MANUAL_FINALIZATION
-    ${PROJECT_SOURCES}
+    ${PROJECT_SOURCES}   
 )
+
 qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 target_include_directories(MultyT PRIVATE
@@ -62,6 +65,7 @@ target_link_libraries(MultyT PRIVATE
     Qt6::Gui
     Qt6::Quick
     Qt6::QuickControls2
+    Qt6::Concurrent
 )
 
  include(GNUInstallDirs)
